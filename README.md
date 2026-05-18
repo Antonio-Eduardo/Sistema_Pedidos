@@ -1,51 +1,60 @@
 # Sistema de Pedidos (Java)
 
-    Projeto de um sistema de gestão de pedidos desenvolvido em Java com foco em Programação Orientada a Objetos, simulando o fluxo de vendas de um comércio. O projeto permite o gerenciamento de clientes, produtos e a automação de pedidos complexos com múltiplos itens e integração com banco de dados.
-    O que tem no projeto
+    Projeto de um sistema de gestão de pedidos desenvolvido em Java com foco em Programação Orientada a Objetos e persistência
+    utilizando JPA. O projeto simula o fluxo completo de vendas de um comércio, permitindo o gerenciamento de clientes, produtos e 
+    a automação de pedidos complexos através de relacionamentos mapeados em banco de dados relacional.
 
-## Gerenciamento de Clientes:
+## O que tem no projeto:
 
-*Registro de novos clientes
+*Gerenciamento de Clientes:
 
-    *Busca de conta por ID
-    *Gerenciamento de Produtos:
-    *Registro de produtos e preços
-    *Listagem de estoque disponível
+    Registro de novos clientes via JPA
+
+    Busca e gerenciamento de contas por ID
+
+*Gerenciamento de Produtos:
+
+    Cadastro de produtos e listagem de estoque disponível no banco de dados
 
 *Operações de Pedido:
 
-    *Criação de pedidos vinculados ao cliente
-    *Adição de itens com controle de quantidade e preço unitário
-    *Fechamento e finalização de pedidos
+    Criação e vinculação de pedidos dinâmicos ao cliente
 
-*Canais de Atendimento:
+    Adição de itens com controle rigoroso de quantidade e preço
 
-    *Caixa convencional
-    *Caixa rápido (com validação de limite de itens)
+    Fechamento e consolidação de valores totais
+
+*Canais de Atendimento (Estratégias de Caixa):
+
+    Caixa convencional
+
+    Caixa rápido (com validação e trava de segurança por limite de itens)
 
 *Tratamento de erros
 
-    *Limite de itens excedido (Caixa Rápido)
-    *Entradas de dados inválidas
-    *Exceções de banco de dados
+    Limite de itens excedido (Caixa Rápido)
+    Erros de persistência e banco de dados personalizados
+    Falhas de controle transacional
 
-*Persistência de dados com MySQL usando JDBC
+*Persistência de dados com MySQL usando JPA / Hibernate
 
-    *Controle de mapeamento complexo com:
-    *Consultas SQL com múltiplos JOINs
-    *Recuperação de chaves geradas (ID)
-    *Relacionamento Um-para-Muitos (Pedido -> Itens)
+    Controle de transações e mapeamento avançado com:
+    Gerenciamento de contexto com EntityManager
+    Controle manual de transações (begin, commit, rollback)
+    Consultas otimizadas com JPQL e LEFT JOIN FETCH (Prevenção do problema N+1)
 
 ## Estrutura
 
-    *main.java.factory.entities → classes principais (Cliente, Pedido, Produto, ItensPedido)
-    *main.java.factory.dao → interfaces DAO
-    *main.java.factory.dao.impl → implementação JDBC/MySQL
-    *main.java.factory.services → interfaces e regras de negócio
-    *main.java.factory.services.impl → implementação das regras de caixa
-    *main.java.factory.application → serviços auxiliares (Cálculo e Gestão de Itens)
-    *main.java.factory.exceptions → tratamento de erros
-    *main → execução no console
+    *entities → mapeamento objeto-relacional das entidades (Cliente, Pedido, Produto, ItensPedido)
+    *enums → estados do pedido e catálogos de códigos de erro
+    *dao → interfaces dos contratos de acesso a dados
+    *dao.impl → implementação dos repositórios utilizando JPA/EntityManager
+    *factory.dao → fábricas para injeção e instanciação dos componentes DAO
+    *services → contratos para as regras dos canais de atendimento (Caixa)
+    *services.impl → implementações lógicas do Caixa Convencional e Caixa Rápido
+    *application → orchestradores de negócio (Cálculo, Validação e Registro)
+    *exceptions → hierarquia de exceções customizadas baseadas em RuntimeException
+    *main → ponto de entrada e execução do fluxo via console
 
 ## Regras de negócio
 
@@ -66,6 +75,8 @@
     *Injeção de Dependência
     *Stream API
     *Separação de responsabilidades
+    *JPA ORM Mappings (@OneToMany, @ManyToOne, @Id)
+    *JPQL Queries (Join Fetch)
 
 ## Exemplo de saída
 EXTRATO COMPLETO - CLIENTE: EDUARDO
@@ -93,11 +104,13 @@ TOTAL DO PEDIDO: R$ 250.00
 - MySQL
 - Stream API
 - Git/GitHub
+- JPA/HIBERNATE
 
 ## Observações
 
 Fiz esse projeto para aprofundar meus conhecimentos em backend, focando em como o código Java lida com relacionamentos complexos no banco de dados.
-A principal evolução deste projeto em relação ao sistema bancário anterior foi a reconstrução de objetos complexos através de consultas SQL envolvendo múltiplos JOINs.
+Esse projeto começou com persistencia via Txt e acabou evoluindo para persistencia em database, utilizando SQL e JDBC. Atualmente o projeto segue a mesma lógica, porem,
+realizei a migração de toda a minha camada de dados de queries SQL manuais no JDBC para o ecossistema do JPA/Hibernate.
 
 ## Ainda existem melhorias futuras possíveis, como:
 
