@@ -2,7 +2,10 @@ package dao.impl;
 
 import dao.ClienteDAO;
 import entities.Cliente;
+import exceptions.DbException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+
 import java.sql.*;
 
 
@@ -15,7 +18,11 @@ public class ClienteDaoImpl implements ClienteDAO {
 
     @Override
     public Cliente buscarContaPorId(Long id) {
-       return em.find(Cliente.class,id);
+        try {
+            return em.find(Cliente.class, id);
+        }catch (PersistenceException e){
+            throw new DbException();
+        }
     }
     @Override
     public void salvar(Cliente c) {

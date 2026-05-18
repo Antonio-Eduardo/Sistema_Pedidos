@@ -6,6 +6,7 @@ import entities.Cliente;
 import entities.ItensPedido;
 import entities.Pedido;
 import entities.Produto;
+import exceptions.TransacaoException;
 import factory.dao.DaoFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -87,13 +88,18 @@ public class Main {
             int validarPedido = ServicoValidacao.lerInteiros(sc, "Tem um pedido em andamento? [1]SIM[2]NAO");
             Pedido pedidoAtual = null;
             if (validarPedido == 2) {
-                em.getTransaction().begin();
+                try {
+                    em.getTransaction().begin();
 
-                pedidoAtual = new Pedido();
-                clienteBusca.addPedido(pedidoAtual);
-                em.persist(pedidoAtual);
+                    pedidoAtual = new Pedido();
+                    clienteBusca.addPedido(pedidoAtual);
+                    em.persist(pedidoAtual);
 
-                em.getTransaction().commit();
+                    em.getTransaction().commit();
+                } catch (Exception e) {
+                    em.getTransaction().rollback();
+                    throw new TransacaoException(e.getMessage());
+                }
                 System.out.println("Pedido criado: " + pedidoAtual.getIdPedido());
             } else {
                 long pedidoIdent = ServicoValidacao.lerLong(sc, "Digite o id do seu pedido: ");

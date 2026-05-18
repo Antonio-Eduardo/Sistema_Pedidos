@@ -3,6 +3,7 @@ package application;
 
 import dao.ProdutoDAO;
 import entities.Produto;
+import exceptions.TransacaoException;
 import factory.dao.DaoFactory;
 import jakarta.persistence.EntityManager;
 
@@ -15,10 +16,15 @@ public class ServicoProduto {
     }
 
     public Produto criarProduto(String nome, double preco){
-        Produto p = new Produto(nome,preco);
-        em.getTransaction().begin();
-        produtoDAO.salvar(p);
-        em.getTransaction().commit();
-        return p;
+        try {
+            Produto p = new Produto(nome, preco);
+            em.getTransaction().begin();
+            produtoDAO.salvar(p);
+            em.getTransaction().commit();
+            return p;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new TransacaoException(e.getMessage());
+        }
     }
 }

@@ -2,7 +2,9 @@ package dao.impl;
 
 import dao.PedidoDAO;
 import entities.Pedido;
+import exceptions.DbException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 
 
 import java.sql.*;
@@ -16,12 +18,17 @@ public class PedidoDaoImpl implements PedidoDAO {
     }
     @Override
     public Pedido buscarPedidoPorId(Long idPedido) {
-        return em.find(Pedido.class,idPedido);
+        try {
+            return em.find(Pedido.class, idPedido);
+        }catch (PersistenceException e){
+            throw new DbException();
+        }
     }
 
     @Override
     public List<Pedido> buscarPedidosComItens(Long id) {
-        String jpql = """
+        try {
+            String jpql = """
             SELECT DISTINCT p
             FROM Pedido p
             LEFT JOIN FETCH p.itensPedidos i
@@ -29,8 +36,12 @@ public class PedidoDaoImpl implements PedidoDAO {
             WHERE p.cliente.iD = :id
             """;
 
-        return em.createQuery(jpql, Pedido.class)
-                .setParameter("id", id)
-                .getResultList();
+            return em.createQuery(jpql, Pedido.class)
+                    .setParameter("id", id)
+                    .getResultList();
+        }catch (PersistenceException e){
+            throw new DbException();
+        }
+
     }
 }

@@ -2,5 +2,6 @@ package enums;
 
 public enum ErrorCodes {
     CAIXA_LIMITE_EXCEDIDO,
-    DB_EXCEPTION
+    DB_EXCEPTION,
+    TRANSACTION_ERROR
 }
