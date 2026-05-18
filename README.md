@@ -9,7 +9,6 @@
 *Gerenciamento de Clientes:
 
     Registro de novos clientes via JPA
-
     Busca e gerenciamento de contas por ID
 
 *Gerenciamento de Produtos:
@@ -19,15 +18,12 @@
 *Operações de Pedido:
 
     Criação e vinculação de pedidos dinâmicos ao cliente
-
     Adição de itens com controle rigoroso de quantidade e preço
-
     Fechamento e consolidação de valores totais
 
 *Canais de Atendimento (Estratégias de Caixa):
 
     Caixa convencional
-
     Caixa rápido (com validação e trava de segurança por limite de itens)
 
 *Tratamento de erros
