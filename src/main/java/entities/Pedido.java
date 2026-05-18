@@ -25,6 +25,7 @@ public class Pedido{
 
     public Pedido(){
         this.status = StatusPedido.ABERTO;
+        this.dataHora = new Timestamp(System.currentTimeMillis());
     }
 
     public Pedido(Long idPedido,double precoPedido, Timestamp dataHora, StatusPedido status) {

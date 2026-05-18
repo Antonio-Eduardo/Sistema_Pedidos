@@ -79,7 +79,7 @@ public class Main {
             }
             List<Produto> produtos = produtoDAO.todosProdutos();
             for (Produto p : produtos) {
-                System.out.println("Nome: " + p.getNome() + "iD: " + p.getiD()
+                System.out.println("Nome: " + p.getNome() + " [iD: " + p.getiD() + "]"
                         + "\nPreco: " + p.getPreco());
             }
             Long idClient = ServicoValidacao.lerLong(sc, "Digite o iD da conta que voce deseja realizar a operacao: ");
