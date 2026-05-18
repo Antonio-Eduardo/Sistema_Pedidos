@@ -38,13 +38,13 @@
 
 ## Estrutura
 
-    *entities → classes principais (Cliente, Pedido, Produto, ItensPedido)
-    *dao → interfaces DAO
-    *dao.impl → implementação JDBC/MySQL
-    *services → interfaces e regras de negócio
-    *services.impl → implementação das regras de caixa
-    *application → serviços auxiliares (Cálculo e Gestão de Itens)
-    *exceptions → tratamento de erros
+    *main.java.factory.entities → classes principais (Cliente, Pedido, Produto, ItensPedido)
+    *main.java.factory.dao → interfaces DAO
+    *main.java.factory.dao.impl → implementação JDBC/MySQL
+    *main.java.factory.services → interfaces e regras de negócio
+    *main.java.factory.services.impl → implementação das regras de caixa
+    *main.java.factory.application → serviços auxiliares (Cálculo e Gestão de Itens)
+    *main.java.factory.exceptions → tratamento de erros
     *main → execução no console
 
 ## Regras de negócio
@@ -83,8 +83,8 @@ TOTAL DO PEDIDO: R$ 250.00
 
     Clonar o repositório
     Configurar o banco de dados MySQL
-    Ajustar as credenciais de conexão no arquivo db.properties
-    Executar a classe Main.java
+    Ajustar as credenciais de conexão no arquivo main.java.factory.db.properties
+    Executar a classe main.java.Main.java
 
 ## Tecnologias utilizadas
 
